@@ -1,0 +1,10 @@
+insert into categorias (categoria_id, nombre) values (1, 'Drama|Romance');
+insert into categorias (categoria_id, nombre) values (2, 'Drama');
+insert into categorias (categoria_id, nombre) values (3, 'Action');
+insert into categorias (categoria_id, nombre) values (4, 'Documentary');
+insert into categorias (categoria_id, nombre) values (5, 'Romance');
+insert into categorias (categoria_id, nombre) values (6, 'Crime');
+insert into categorias (categoria_id, nombre) values (7, 'Comedy');
+insert into categorias (categoria_id, nombre) values (8, 'Thriller');
+insert into categorias (categoria_id, nombre) values (9, 'Crime|Drama|Thriller');
+insert into categorias (categoria_id, nombre) values (10, 'Drama|Romance|War');

@@ -1,0 +1,4 @@
+// crear db
+
+use("db1")
+db.createCollection("users")

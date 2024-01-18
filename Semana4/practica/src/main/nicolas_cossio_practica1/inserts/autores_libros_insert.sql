@@ -1,0 +1,12 @@
+insert into autores_libros (autor_id, isbn) values (16, '836736529-1');
+insert into autores_libros (autor_id, isbn) values (6, '836736529-1');
+insert into autores_libros (autor_id, isbn) values (5, '287557485-X');
+insert into autores_libros (autor_id, isbn) values (15, '042456321-5');
+insert into autores_libros (autor_id, isbn) values (12, '070799649-X');
+insert into autores_libros (autor_id, isbn) values (2, '003459622-4');
+insert into autores_libros (autor_id, isbn) values (19, '932347170-4');
+insert into autores_libros (autor_id, isbn) values (7, '365942907-4');
+insert into autores_libros (autor_id, isbn) values (8, '907886596-2');
+insert into autores_libros (autor_id, isbn) values (7, '403712972-8');
+insert into autores_libros (autor_id, isbn) values (17, '009625000-3');
+insert into autores_libros (autor_id, isbn) values (10, '816221592-1');
