@@ -1,0 +1,153 @@
+use("db1")
+db.createCollection("usuarios",
+    {
+        validator:{
+            $jsonSchema:{
+                bsonType: 'object',
+                properties:{
+                    nombre: {
+                        bsonType: 'string'
+                    },
+                    password:{
+                        bsonType: 'string'
+                    },
+                    productos: {
+                        bsonType: 'array',
+                        items: {
+                            bsonType: 'object',
+                            properties:{
+                                nombre_producto:{
+                                    bsonType: 'string'
+                                },
+                                precio:{
+                                    bsonType: 'double'
+                                },
+                                cantidad:{
+                                    bsonType: 'int'
+                                },
+                                comentarios:{
+                                    bsonType: 'array',
+                                    items: {
+                                        bsonType: 'objectId'
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    direcciones:{
+                        bsonType: 'array',
+                        items:
+                        {
+                            bsonType: 'objectId',
+                        }
+                    }
+                }
+            }
+        }
+    }
+)
+
+use("db1")
+db.createCollection("comentarios",
+{
+    validator:{
+        $jsonSchema:{
+            bsonType:'object',
+            properties:
+            {
+                contenido:{
+                    bsonType: 'string'
+                }
+            }
+        }
+    }
+})
+
+use("db1")
+db.createCollection("productos",
+{
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            properties: {
+                nombre_producto: {
+                    bsonType: "string"
+                },
+                precio : {
+                    bsonType: "double"
+                },
+                comentarios: {
+                    bsonType: "array",
+                    items: {
+                        bsonType: "objectId",
+                    }
+                }
+            }
+        }
+    }
+})
+
+use("db1")
+db.productos.createIndex({nombre_producto: 1}, {unique: true})
+
+use("db1")
+db.comentarios.insertOne({
+    contenido: "Muy buen producto"
+})
+
+
+use("db1")
+db.productos.find(
+    {
+        nombre_producto: "Laptop HP"
+    },
+)
+
+use("db1")
+db.usuarios.find()
+
+use("db1")
+db.productos.insertOne({
+    nombre_producto: "Laptop HP",
+    precio: 1500.10,
+    comentarios: [
+        ObjectId("65ab1836afbfb7eb746f7a2d")
+    ]
+})
+
+
+use("db1")	
+db.productos.insertOne({
+    nombre_producto: "Laptop HP",
+    precio: 1500.10,
+    comentarios: [
+        ObjectId("65ab1836afbfb7eb746f7a2d")
+    ]
+})
+
+use("db1")
+db.createCollection("direcciones",
+{
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            properties: {
+                calle: {
+                    bsonType: "string"
+                },
+                numero : {
+                    bsonType: "string"
+                },
+                distrito : {
+                    bsonType: "string"
+                },
+                ciudad: {
+                    bsonType: "string"
+                }
+            }
+        }
+    }
+})
+
+use("db1")
+db.comentarios.insertOne("Buen producto. Satisfecho con la compra")
