@@ -1,0 +1,118 @@
+use("db1")
+db.universidades.insertOne({
+    nombre: "Universidad Nacional de Córdoba",
+    telefono: "+54 351 5353636",
+    carreras: ["Ing Mecanica", "Ing Civil", "Ing Electronica"],
+    alumnos: 5000,
+    direccion: {
+        calle: "Av. Haya de la Torre",
+        numero:  249, 
+        distrito: "Ciudad Universitaria",
+        provincia: "Cordoba",
+        pais: "Argentina"
+    }
+});
+
+use("db1")
+db.universidades.find()
+
+use("db1")
+db.universidades.insertMany([
+    {
+        nombre: "PUCP",
+        carreras: ["Ing Mecanica", "Ing Civil", "Ing Electronica"],
+        alumnos: 10300,
+        direccion: {
+            calle: "Av. Universitaria",
+            numero:  1801, 
+            distrito: "San Miguel",
+            provincia: "Lima",
+            pais: "Peru"
+        }
+    },
+    {
+        nombre: "UNI",
+        carreras: ["Ing Mecanica", "Ing Civil", "Ing Electronica"],
+        alumnos: 43000,
+        direccion: {
+            calle: "Av. Tupac Amaru",
+            numero:  210, 
+            distrito: "Rimac",
+            provincia: "Lima",
+            pais: "Peru"
+        }
+    },
+    {
+        nombre: "UNMSM",
+        carreras: ["Ing Sistemas", "Ing Telecomunicaciones"],
+        alumnos: 30000,
+        direccion: {
+            calle: "Av. Venezuela",
+            numero:  3400, 
+            distrito: "Lima",
+            provincia: "Lima",
+            pais: "Peru"
+        }
+    }
+])
+
+db.createCollection("universidades",
+{
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            required: ["nombre", "telefono", "carreras", "alumnos", "direccion"],
+            properties: {
+                nombre: {
+                    bsonType: "string",
+                    description: "debe ser un string y es obligatorio"
+                },
+                telefono: {
+                    bsonType: "string",
+                    description: "debe ser un string y es obligatorio"
+                },
+                carreras: {
+                    bsonType: "array",
+                    description: "debe ser un array y es obligatorio"
+                },
+                alumnos: {
+                    bsonType: "int",
+                    description: "debe ser un int y es obligatorio"
+                },
+                direccion: {
+                    bsonType: "object",
+                    required: ["calle", "numero", "distrito", "provincia", "pais"],
+                    properties: {
+                        calle: {
+                            bsonType: "string",
+                            description: "debe ser un string y es obligatorio"
+                        },
+                        numero: {
+                            bsonType: "int",
+                            description: "debe ser un int y es obligatorio"
+                        },
+                        distrito: {
+                            bsonType: "string",
+                            description: "debe ser un string y es obligatorio"
+                        },
+                        provincia: {
+                            bsonType: "string",
+                            description: "debe ser un string y es obligatorio"
+                        },
+                        pais: {
+                            bsonType: "string",
+                            description: "debe ser un string y es obligatorio"
+                        }
+                    }
+                }
+            }
+        }
+    }
+});
+
+use("db1")
+db.universidades.find(
+    {
+        "direccion.provincia": "Lima"
+    }
+);
