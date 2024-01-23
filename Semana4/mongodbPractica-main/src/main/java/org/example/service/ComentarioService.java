@@ -13,7 +13,7 @@ public class ComentarioService {
     public String agregarComentario(Comentario comentario) {
         // Logica de negocio
         try {
-            return comentarioRepository.agregarComentario(comentario);
+            return comentarioRepository.save(comentario);
         } catch (Exception e) {
             // Logica de manejo de errores
             System.out.println(e.getMessage());

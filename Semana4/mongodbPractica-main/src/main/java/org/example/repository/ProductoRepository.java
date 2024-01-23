@@ -2,7 +2,6 @@ package org.example.repository;
 
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
-import org.bson.types.ObjectId;
 import org.example.documents.Producto;
 
 public class ProductoRepository {
@@ -12,17 +11,18 @@ public class ProductoRepository {
         this.collectionProducto = collectionProducto;
     }
 
-    public void agregarProducto(Producto producto) {
+    public void save(Producto producto) {
         collectionProducto.insertOne(producto.toDocument());
     }
 
-    public Producto findProducto(String nombreProducto) {
+    public Producto findProductoByNombre(String nombreProducto) {
         Document filter = new Document("nombre_producto", nombreProducto);
-        Document docProducto = (Document) collectionProducto.find(filter).first();
-        Producto producto = new Producto();
-        producto.setIdProducto(docProducto.getObjectId("_id").toString());
-        producto.setNombreProducto(docProducto.getString("nombre_producto"));
-        producto.setPrecio(docProducto.getDouble("precio"));
-        return producto;
+        Document productoDB = (Document) collectionProducto.find(filter).first();
+        if (productoDB != null) {
+            return Producto.fromDocument(productoDB);
+        }
+        // Por temas de simplicidad, si no encuentra el producto, regresamos un producto vacio
+        // pero deberiamos enviar un response o algo parecido.
+        return new Producto();
     }
 }

@@ -12,7 +12,7 @@ public class ComentarioRepository {
         this.collectionComentario = collectionComentario;
     }
 
-    public String agregarComentario(Comentario comentario) {
+    public String save(Comentario comentario) {
         Document documentComentario = comentario.toDocument();
         collectionComentario.insertOne(documentComentario);
         ObjectId idComentario = documentComentario.getObjectId("_id");

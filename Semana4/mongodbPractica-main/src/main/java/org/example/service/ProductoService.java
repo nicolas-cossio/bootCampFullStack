@@ -13,7 +13,7 @@ public class ProductoService {
     public void agregarProducto(Producto producto) {
         // Logica de negocio
         try {
-            productoRepository.agregarProducto(producto);
+            productoRepository.save(producto);
         } catch (Exception e) {
             // Logica de manejo de errores
             System.out.println(e.getMessage());

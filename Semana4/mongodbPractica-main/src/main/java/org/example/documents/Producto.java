@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 public class Producto {
-    String idProducto;
+    ObjectId idProducto;
     String nombreProducto;
     Double precio;
     List<ObjectId> comentarios = new ArrayList<>();
@@ -27,5 +27,18 @@ public class Producto {
         document.append("precio", this.getPrecio());
         document.append("comentarios", this.getComentarios());
         return document;
+    }
+
+    public static Producto fromDocument(Document document) {
+        Producto producto = new Producto();
+        producto.setIdProducto(document.getObjectId("_id"));
+        producto.setNombreProducto(document.getString("nombre_producto"));
+        producto.setPrecio(document.getDouble("precio"));
+        producto.setComentarios(document.getList("comentarios", ObjectId.class));
+        return producto;
+    }
+
+    public void addComentario(ObjectId idComentario) {
+        this.comentarios.add(idComentario);
     }
 }

@@ -22,15 +22,16 @@ public class Main {
         MongoCollection comentarioCollection = MongoDBConnector.database.getCollection("comentarios");
         MongoCollection productoCollection = MongoDBConnector.database.getCollection("productos");
         MongoCollection usuarioCollection = MongoDBConnector.database.getCollection("usuarios");
+
         ComentarioRepository comentarioRepository = new ComentarioRepository(comentarioCollection);
         ProductoRepository productoRepository = new ProductoRepository(productoCollection);
         UsuarioRepository usuarioRepository = new UsuarioRepository(usuarioCollection);
 
-        ComentarioService comentarioService = new ComentarioService(comentarioRepository);
-        Comentario comentario = new Comentario();
-        comentario.setContenido("Excelente producto");
-        String id = comentarioService.agregarComentario(comentario);
-        System.out.println(id);
+//        ComentarioService comentarioService = new ComentarioService(comentarioRepository);
+//        Comentario comentario = new Comentario();
+//        comentario.setContenido("Excelente producto");
+//        String id = comentarioService.agregarComentario(comentario);
+//        System.out.println(id);
 
 //        ProductoService productoService = new ProductoService(productoRepository);
 //        Producto producto = new Producto();
@@ -42,9 +43,10 @@ public class Main {
         UsuarioService usuarioService = new UsuarioService(usuarioRepository);
 //        usuarioService.agregarProducto("Laptop HP");
         Usuario usuario = new Usuario();
-        usuario.setNombre("Juan");
-        usuario.setPassword("password");
-//        usuario.agregarProducto(producto);
+        usuario.setNombre("Jose");
+        usuario.setPassword("1234");
+        usuario.setProductos(new ArrayList<>());
+        usuario.setDirecciones(new ArrayList<>());
         usuarioService.agregarUsuario(usuario);
 
     }
