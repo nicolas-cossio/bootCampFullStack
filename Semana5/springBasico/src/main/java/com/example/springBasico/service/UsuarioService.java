@@ -5,6 +5,7 @@ import com.example.springBasico.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UsuarioService {
@@ -14,7 +15,7 @@ public class UsuarioService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public List<Usuario> mostrarUsuarios() {
+    public List<Usuario> findAll() {
         return usuarioRepository.findAll();
     }
 
@@ -22,5 +23,21 @@ public class UsuarioService {
         // Se valida que el usuario no exista.
 //        user = usuarioRepository.findByNombre(usuario.getNombre());
         return usuarioRepository.save(usuario);
+    }
+
+    public Optional<Usuario> buscarById(Integer id) {
+        Optional<Usuario> usuarioBD = usuarioRepository.findById(id);
+        return usuarioBD;
+    }
+
+    public Optional<Usuario> updateById(Integer id, Usuario usuario) {
+        Optional<Usuario> usuarioBD = usuarioRepository.findById(id);
+        if (usuarioBD.isPresent()) {
+            Usuario user = usuarioBD.get();
+            user.setNombre(usuario.getNombre());
+            user.setApellido(usuario.getApellido());
+            return Optional.of(usuarioRepository.save(user));
+        }
+        return Optional.empty();
     }
 }
