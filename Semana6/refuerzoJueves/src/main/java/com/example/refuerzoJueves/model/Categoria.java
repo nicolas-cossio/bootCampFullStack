@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -14,4 +16,10 @@ public class Categoria {
     @Column(name = "categoria_id")
     private Integer id;
     private String nombre;
+    @ManyToMany
+    @JoinTable( name = "libros_categorias",
+            joinColumns = @JoinColumn(name = "categoria_id_fk"),
+            inverseJoinColumns = @JoinColumn(name = "isbn")
+    )
+    private List<Libro> libros;
 }
