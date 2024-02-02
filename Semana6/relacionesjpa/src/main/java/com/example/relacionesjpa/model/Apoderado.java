@@ -1,5 +1,6 @@
 package com.example.relacionesjpa.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -26,7 +27,8 @@ public class Apoderado {
     @Column(name = "fecha_modificacion")
     private Date fechaModificacion;
     private String email;
-    @OneToMany(mappedBy = "apoderado")
-    private List<Estudiante> estudiantes;
+//    @OneToMany(mappedBy = "apoderado")
+//    @JsonIgnoreProperties("apoderado")
+//    private List<Estudiante> estudiantes;
 
 }

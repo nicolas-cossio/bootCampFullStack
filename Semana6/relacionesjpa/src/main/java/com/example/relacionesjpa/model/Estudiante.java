@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -28,6 +29,13 @@ public class Estudiante {
     private String email;
     @ManyToOne
     @JoinColumn(name = "apoderado_id_fk")
-    @JsonIgnore
     private Apoderado apoderado;
+
+    // Relacion muchos a muchos con curso
+    @ManyToMany
+    @JoinTable(name = "estudiante_curso",
+            joinColumns = @JoinColumn(name = "estudiante_id_fk"),
+            inverseJoinColumns = @JoinColumn(name = "curso_id_fk"))
+    private List<Curso> cursos;
+
 }
