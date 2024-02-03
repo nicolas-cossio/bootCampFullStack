@@ -14,6 +14,12 @@ public class LibroService {
     private LibroRepository libroRepository;
 
     public ResponseBase saveLibro(Libro libro) {
+        if (libro.getIsbn().isEmpty()) {
+            return new ResponseBase(400,
+                    "Debe enviar el codigo del libro",
+                    false,
+                    Optional.empty());
+        }
         Optional<Libro> libroBd = libroRepository.findById(libro.getIsbn());
         if (libroBd.isPresent()) {
             return new ResponseBase(400,

@@ -1,11 +1,13 @@
 package com.example.refuerzoJueves.service;
 
 import com.example.refuerzoJueves.model.Autor;
+import com.example.refuerzoJueves.model.Libro;
 import com.example.refuerzoJueves.repository.AutorRepository;
 import com.example.refuerzoJueves.response.ResponseBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -53,6 +55,31 @@ public class AutorService {
                     Optional.of(autor.get()));
         } else {
             return new ResponseBase(404,
+                    "Autor no encontrado",
+                    false,
+                    Optional.empty());
+        }
+    }
+
+    // Devuelve los libros en base el id del autor.
+    public ResponseBase mostrarLibrosAutor(Integer id) {
+        // Se valida que el autor exista en bd.
+        Optional<Autor> autorBd = autorRepository.findById(id);
+        if (autorBd.isPresent()) {
+            List<Libro> libros = autorBd.get().getLibros();
+            if (!libros.isEmpty()) {
+                return new ResponseBase(200,
+                        "Libros encontrados",
+                        true,
+                        Optional.of(libros));
+            } else {
+                return new ResponseBase(200,
+                        "El autor no tiene libros registrados",
+                        true,
+                        Optional.empty());
+            }
+        } else {
+            return new ResponseBase(400,
                     "Autor no encontrado",
                     false,
                     Optional.empty());

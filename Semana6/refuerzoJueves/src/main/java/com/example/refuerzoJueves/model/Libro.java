@@ -21,9 +21,12 @@ public class Libro {
     @ManyToOne
     @JoinColumn(name = "editorial_id_fk")
     private Editorial editorial;
-
     // Relacion con tabla comentarios.
     @OneToMany
     @JoinColumn(name = "isbn")
     private List<Comentario> comentarios;
+    // relacion bidireccional con tabla muchos a muchos
+    @ManyToMany(mappedBy = "libros")
+    private List<Autor> autores;
+
 }
