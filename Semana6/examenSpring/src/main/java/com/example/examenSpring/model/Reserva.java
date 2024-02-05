@@ -13,6 +13,7 @@ public class Reserva {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "reserva_id")
     private Integer id;
+    private String codigoReserva;
     @Column(name = "asiento_numero")
     private Integer asientoNumero;
     private Boolean estado;

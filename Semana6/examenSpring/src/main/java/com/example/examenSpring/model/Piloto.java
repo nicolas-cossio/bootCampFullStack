@@ -15,6 +15,7 @@ public class Piloto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "piloto_id")
     private Integer id;
+    private Integer matricula;          // Campo nuevo para identificar a un piloto como unico.
     private String nombre;
     private String apellido;
     private Boolean estado;
