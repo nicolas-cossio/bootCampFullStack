@@ -76,14 +76,14 @@ public class PersonaAdapter implements PersonaServiceOut {
     }
 
     @Value("${token.api}")
-    private String token;
+    public String tokenApi;
 
     public ResponseReniec getExecutionReniec(String numero) {
-        String auth = "Bearer " + token;
+        String auth = "Bearer " + tokenApi;
         return reniec.getInfo(numero, auth);
     }
 
-    private PersonaEntity getEntity(ResponseReniec reniec, RequestPersona requestPersona){
+    private PersonaEntity getEntity(ResponseReniec reniec, RequestPersona requestPersona) {
         TipoDocumentoEntity tipoDocumento = tipoDocumentoRepository.findByCodTipo(requestPersona.getTipoDoc());
         PersonaEntity entity = new PersonaEntity();
         entity.setNumDocu(reniec.getNumeroDocumento());
@@ -96,7 +96,7 @@ public class PersonaAdapter implements PersonaServiceOut {
         entity.setTipoDocumento(tipoDocumento);
         return entity;
     }
-    private PersonaEntity getEntityUpdate(ResponseReniec reniec, PersonaEntity personaActualizar){
+    private PersonaEntity getEntityUpdate(ResponseReniec reniec, PersonaEntity personaActualizar) {
         personaActualizar.setNombres(reniec.getNombres());
         personaActualizar.setApePat(reniec.getApellidoPaterno());
         personaActualizar.setApeMat(reniec.getApellidoMaterno());
@@ -104,9 +104,9 @@ public class PersonaAdapter implements PersonaServiceOut {
         personaActualizar.setDateModif(getTimestamp());
         return personaActualizar;
     }
-    private Timestamp getTimestamp(){
+
+    private Timestamp getTimestamp() {
         long currentTime = System.currentTimeMillis();
-        Timestamp timestamp = new Timestamp(currentTime);
-        return timestamp;
+        return new Timestamp(currentTime);
     }
 }

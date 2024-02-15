@@ -9,7 +9,7 @@ import java.util.Optional;
 @Getter
 @Setter
 @AllArgsConstructor
-public class BaseResponse {
+public class ResponseBase {
     private int code;
     private String message;
     private Optional data;
