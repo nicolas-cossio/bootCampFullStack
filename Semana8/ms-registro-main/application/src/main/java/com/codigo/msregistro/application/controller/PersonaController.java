@@ -39,7 +39,8 @@ public class PersonaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PersonaDto>actualizar(@PathVariable Long id, @RequestBody RequestPersona requestPersona){
+    public ResponseEntity<PersonaDto>actualizar(@PathVariable Long id,
+                                                @RequestBody RequestPersona requestPersona){
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(personaServiceIn.actualizarIn(id,requestPersona));

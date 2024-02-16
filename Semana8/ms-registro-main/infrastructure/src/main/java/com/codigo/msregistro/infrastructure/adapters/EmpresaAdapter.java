@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,38 +32,80 @@ public class EmpresaAdapter implements EmpresaServiceOut {
 
     @Override
     public ResponseBase crearEmpresaOut(RequestEmpresa requestEmpresa) {
-        try {
-            ResponseSunat datosSunat = getExecutionSunat(requestEmpresa.getNumDoc());
-            empresaRepository.save(getEntity(datosSunat, requestEmpresa));
+        ResponseSunat datosSunat = getExecutionSunat(requestEmpresa.getNumDoc());
+        empresaRepository.save(getEntity(datosSunat, requestEmpresa));
+        return new ResponseBase(Constants.CODE_OK,
+                Constants.MESSAGE_OK,
+                Optional.of(empresaMapper.mapToDto(getEntity(datosSunat, requestEmpresa)))
+        );
+    }
+
+    @Override
+    public ResponseBase obtenerEmpresaOut(Long id) {
+        Optional<EmpresaEntity> empresaBd = empresaRepository.findById(id);
+        if(empresaBd.isPresent()) {
             return new ResponseBase(Constants.CODE_OK,
                     Constants.MESSAGE_OK,
-                    Optional.of(empresaMapper.mapToDto(getEntity(datosSunat, requestEmpresa)))
+                    Optional.of(empresaMapper.mapToDto(empresaBd.get()))
             );
-        } catch (Exception e) {
+        }
+        else {
             return new ResponseBase(Constants.CODE_ERROR,
-                    e.getMessage(),
-                    Optional.empty());
+                    Constants.MESSAGE_ERROR,
+                    Optional.empty()
+            );
         }
     }
 
     @Override
-    public Optional<EmpresaDto> obtenerEmpresaOut(Long id) {
-        return Optional.ofNullable(empresaMapper.mapToDto(empresaRepository.findById(id).get()));
+    public ResponseBase obtenerTodosOut() {
+        List<EmpresaDto> empresas = new ArrayList<>();
+        List<EmpresaEntity> entities = empresaRepository.findAll();
+        for (EmpresaEntity empresa : entities) {
+            empresas.add(empresaMapper.mapToDto(empresa));
+        }
+        return new ResponseBase(Constants.CODE_OK,
+                Constants.MESSAGE_OK,
+                Optional.of(empresas));
     }
 
     @Override
-    public List<EmpresaDto> obtenerTodosOut() {
-        return null;
+    public ResponseBase actualizarOut(Long id, RequestEmpresa requestEmpresa) {
+        Optional<EmpresaEntity> empresaBd = empresaRepository.findById(id);
+        if (empresaBd.isPresent()) {
+            ResponseSunat datosSunat = getExecutionSunat(requestEmpresa.getNumDoc());
+            empresaRepository.save(getEntityUpdate(datosSunat, empresaBd.get()));
+            return new ResponseBase(Constants.CODE_OK,
+                    Constants.MESSAGE_OK,
+                    Optional.of(empresaMapper.mapToDto(getEntityUpdate(datosSunat, empresaBd.get())))
+            );
+        } else {
+            return new ResponseBase(Constants.CODE_ERROR,
+                    Constants.MESSAGE_ERROR,
+                    Optional.empty()
+            );
+        }
     }
 
     @Override
-    public EmpresaDto actualizarOut(Long id, RequestEmpresa requestEmpresa) {
-        return null;
-    }
-
-    @Override
-    public EmpresaDto deleteOut(Long id) {
-        return null;
+    public ResponseBase deleteOut(Long id) {
+        Optional<EmpresaEntity> empresaBd = empresaRepository.findById(id);
+        if(empresaBd.isPresent()) {
+            empresaBd.get().setEstado(0);
+            empresaBd.get().setUsuaDelet(Constants.AUDIT_ADMIN);
+            empresaBd.get().setDateDelet(getTimestamp());
+            empresaRepository.save(empresaBd.get());
+            return new ResponseBase(Constants.CODE_OK,
+                    Constants.MESSAGE_OK,
+                    Optional.of(empresaMapper.mapToDto(empresaBd.get()))
+            );
+        }
+        else {
+            return new ResponseBase(Constants.CODE_ERROR,
+                    Constants.MESSAGE_ERROR,
+                    Optional.empty()
+            );
+        }
     }
 
     @Value("${token.api}")

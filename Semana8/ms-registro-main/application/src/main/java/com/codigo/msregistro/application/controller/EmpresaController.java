@@ -16,4 +16,25 @@ public class EmpresaController {
     public ResponseBase registrar(@RequestBody RequestEmpresa requestEmpresa) {
         return empresaServiceIn.crearEmpresaIn(requestEmpresa);
     }
+
+    @GetMapping("/{id}")
+    public ResponseBase obtener(@PathVariable Long id) {
+        return empresaServiceIn.obtenerEmpresaIn(id);
+    }
+
+    @GetMapping
+    public ResponseBase obtenerTodos() {
+        return empresaServiceIn.obtenerTodosIn();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseBase actualizar(@PathVariable Long id,
+                                   @RequestBody RequestEmpresa requestEmpresa) {
+        return empresaServiceIn.actualizarIn(id, requestEmpresa);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseBase eliminar(@PathVariable Long id) {
+        return empresaServiceIn.deleteIn(id);
+    }
 }

@@ -8,9 +8,6 @@ import com.codigo.msregistro.domain.ports.out.EmpresaServiceOut;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 public class EmpresaServiceImpl implements EmpresaServiceIn {
@@ -22,22 +19,22 @@ public class EmpresaServiceImpl implements EmpresaServiceIn {
     }
 
     @Override
-    public Optional<EmpresaDto> obtenerEmpresaIn(Long id) {
+    public ResponseBase obtenerEmpresaIn(Long id) {
         return empresaServiceOut.obtenerEmpresaOut(id);
     }
 
     @Override
-    public List<EmpresaDto> obtenerTodosIn() {
+    public ResponseBase obtenerTodosIn() {
         return empresaServiceOut.obtenerTodosOut();
     }
 
     @Override
-    public EmpresaDto actualizarIn(Long id, RequestEmpresa requestEmpresa) {
+    public ResponseBase actualizarIn(Long id, RequestEmpresa requestEmpresa) {
         return empresaServiceOut.actualizarOut(id, requestEmpresa);
     }
 
     @Override
-    public EmpresaDto deleteIn(Long id) {
+    public ResponseBase deleteIn(Long id) {
         return empresaServiceOut.deleteOut(id);
     }
 }
