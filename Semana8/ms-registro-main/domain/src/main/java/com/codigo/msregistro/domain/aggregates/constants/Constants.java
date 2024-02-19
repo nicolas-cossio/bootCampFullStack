@@ -7,4 +7,7 @@ public class Constants {
     public static final int CODE_ERROR = 500;
     public static final Integer STATUS_ACTIVE = 1;
     public static final String AUDIT_ADMIN="NCOSSIO";
+
+    // Clave de REDIS
+    public static final String REDIS_KEY_PERSONA = "MS:REGISTRO:PERSONA:";
 }

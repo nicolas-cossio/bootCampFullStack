@@ -8,9 +8,11 @@ import com.codigo.msregistro.domain.ports.out.PersonaServiceOut;
 import com.codigo.msregistro.infrastructure.entity.PersonaEntity;
 import com.codigo.msregistro.infrastructure.entity.TipoDocumentoEntity;
 import com.codigo.msregistro.infrastructure.mapper.PersonaMapper;
+import com.codigo.msregistro.infrastructure.redis.RedisService;
 import com.codigo.msregistro.infrastructure.repository.PersonaRepository;
 import com.codigo.msregistro.infrastructure.repository.TipoDocumentoRepository;
 import com.codigo.msregistro.infrastructure.rest.client.ClientReniec;
+import com.codigo.msregistro.infrastructure.util.Util;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,7 @@ public class PersonaAdapter implements PersonaServiceOut {
     private final TipoDocumentoRepository tipoDocumentoRepository;
     private final PersonaMapper personaMapper;
     private final ClientReniec reniec;
+    private final RedisService redisService;
 
     @Override
     public PersonaDto crearPersonaOut(RequestPersona requestPersona) {
@@ -38,7 +41,18 @@ public class PersonaAdapter implements PersonaServiceOut {
 
     @Override
     public Optional<PersonaDto> obtenerPersonaOut(Long id) {
-        return Optional.ofNullable(personaMapper.mapToDto(personaRepository.findById(id).get()));
+        // Se consulta a redis si existe un registro para esta persona
+        String redisInfo = redisService.getFromRedis(Constants.REDIS_KEY_PERSONA+id);
+        if (redisInfo != null) {
+            PersonaDto personaDto = Util.convertFromJson(redisInfo, PersonaDto.class);
+            return Optional.of(personaDto);
+        }
+        else {
+            PersonaDto dto = personaMapper.mapToDto(personaRepository.findById(id).get());
+            String redis = Util.convertToJson(dto);
+            redisService.saveInRedis(Constants.REDIS_KEY_PERSONA+id, redis, 1);
+            return Optional.of(dto);
+        }
     }
 
     @Override

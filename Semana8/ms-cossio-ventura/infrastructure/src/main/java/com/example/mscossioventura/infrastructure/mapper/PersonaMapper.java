@@ -1,10 +1,9 @@
-package com.codigo.msregistro.infrastructure.mapper;
+package com.example.mscossioventura.infrastructure.mapper;
 
-import com.codigo.msregistro.domain.aggregates.dto.PersonaDto;
-import com.codigo.msregistro.infrastructure.entity.PersonaEntity;
+import com.example.mscossioventura.domain.aggregates.dto.PersonaDto;
+import com.example.mscossioventura.infrastructure.entity.PersonaEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 @Component
 public class PersonaMapper {
