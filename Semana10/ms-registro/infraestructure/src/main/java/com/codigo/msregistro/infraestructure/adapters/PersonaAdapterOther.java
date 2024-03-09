@@ -29,17 +29,18 @@ public class PersonaAdapterOther implements PersonaServiceOut {
     private final TipoDocumentoRepository tipoDocumentoRepository;
     private final PersonaMapper personaMapper;
     private final ClienteReniec reniec;
-    private final RedisService redisService;
-    private final Util util;
 
     @Value("${token.api}")
     private String tokenApi;
 
     @Override
     public PersonaDTO crearPersonaOut(RequestPersona requestPersona) {
+        // Se realiza la llamada al API de reniec
         ResponseReniec datosReniec = getExecutionReniec(requestPersona.getNumDoc());
-        PersonaEntity personaEntity = getEntity(datosReniec,requestPersona);
+        // Se convierte la llamada de reniec con el request en una entidad
+        PersonaEntity personaEntity = getEntity(datosReniec, requestPersona);
         personaRepository.save(personaEntity);
+        // Se mapea de una entity al Dto que se va a devolver.
         return personaMapper.mapToDto(personaEntity);
     }
 
@@ -95,7 +96,7 @@ public class PersonaAdapterOther implements PersonaServiceOut {
 
     private ResponseReniec getExecutionReniec(String numero){
         String authorization = "Bearer "+tokenApi;
-        return  reniec.getInfoReniec(numero,authorization);
+        return  reniec.getInfoReniec(numero, authorization);
     }
 
     private PersonaEntity getEntity(ResponseReniec reniec, RequestPersona requestPersona){
@@ -106,8 +107,6 @@ public class PersonaAdapterOther implements PersonaServiceOut {
         entity.setApePat(reniec.getApellidoPaterno());
         entity.setApeMat(reniec.getApellidoMaterno());
         entity.setEstado(Constants.STATUS_ACTIVE);
-        //entity.setUsuaCrea(Constants.AUDIT_ADMIN);
-        //entity.setDateCreate(getTimestamp());
         entity.setTipoDocumento(tipoDocumento);
         return entity;
     }
@@ -116,8 +115,6 @@ public class PersonaAdapterOther implements PersonaServiceOut {
         personaActualizar.setNombres(reniec.getNombres());
         personaActualizar.setApePat(reniec.getApellidoPaterno());
         personaActualizar.setApeMat(reniec.getApellidoMaterno());
-        //personaActualizar.setUsuaModif(Constants.AUDIT_ADMIN);
-        //personaActualizar.setDateModif(getTimestamp());
         return personaActualizar;
     }
 

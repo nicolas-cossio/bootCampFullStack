@@ -26,6 +26,12 @@ public class PersonaDTO {
     private String usuaDelet;
     private Timestamp dateDelet;
 
-    public PersonaDTO(long idPersona, String numDocu, String nombres, String apePat, String apeMat, int estado) {
+    public PersonaDTO(Long idPersona, String numDocu, String nombres, String apePat, String apeMat, Integer estado) {
+        this.idPersona = idPersona;
+        this.numDocu = numDocu;
+        this.nombres = nombres;
+        this.apePat = apePat;
+        this.apeMat = apeMat;
+        this.estado = estado;
     }
 }

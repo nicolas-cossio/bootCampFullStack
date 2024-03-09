@@ -4,20 +4,23 @@ import com.codigo.msregistro.domain.aggregates.dto.PersonaDTO;
 import com.codigo.msregistro.domain.aggregates.request.RequestPersona;
 import com.codigo.msregistro.domain.aggregates.response.ResponseReniec;
 import com.codigo.msregistro.infraestructure.entity.PersonaEntity;
+import com.codigo.msregistro.infraestructure.entity.TipoDocumentoEntity;
 import com.codigo.msregistro.infraestructure.mapper.PersonaMapper;
 import com.codigo.msregistro.infraestructure.repository.PersonaRepository;
 import com.codigo.msregistro.infraestructure.repository.TipoDocumentoRepository;
 import com.codigo.msregistro.infraestructure.rest.client.ClienteReniec;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.*;
@@ -41,6 +44,26 @@ class PersonaAdapterOtherTest {
     }
 
     @Test
+    void crearPersonaOut_returnPersonaDTO() {
+        // ARRANGE
+        RequestPersona requestPersona = new RequestPersona("DNI", "72032008");
+        ResponseReniec datosReniec = getResponseReniec();
+        ReflectionTestUtils.setField(personaAdapterOther, "tokenApi", "X", String.class);
+        PersonaDTO personaDTOTest = new PersonaDTO(1L , "720320083", "Juan",
+                "Perez","Lopez", 1);
+
+        // ACT
+        when(reniec.getInfoReniec(anyString(), anyString())).thenReturn(datosReniec);
+        when(personaMapper.mapToDto(any())).thenReturn(personaDTOTest);
+        PersonaDTO personaDTO = personaAdapterOther.crearPersonaOut(requestPersona);
+
+        // ASSERT
+        assertEquals(personaDTOTest, personaDTO);
+    }
+
+
+    // Happy path
+    @Test
     void crearPersonaOutSuccess() {
         // Preparar nuestros datos para el test
         RequestPersona requestPersona = new RequestPersona("DNI", "72032008");
@@ -54,6 +77,7 @@ class PersonaAdapterOtherTest {
         assertDoesNotThrow(() -> personaAdapterOther.crearPersonaOut(requestPersona));
     }
 
+    // Error testing
     @Test
     void crearPersonaOutErrorApiReniec() {
         // ARRANGE - ORGANIZAR
@@ -99,6 +123,19 @@ class PersonaAdapterOtherTest {
         // ASSERT - AFIRMAR
         Optional<PersonaDTO> result = personaAdapterOther.obtenerPersonaOut(id);
         assertTrue(result.isEmpty());
+    }
+
+    @Test
+    void obtenerTodosOut_whenSizeGreaterThan0_returnList() {
+        // Arrange
+        PersonaEntity persona1 = new PersonaEntity();
+
+        // Act
+        when(personaRepository.findAll()).thenReturn(List.of(persona1));
+
+        // Assert
+        List<PersonaDTO> personaDTOList = personaAdapterOther.obtenerTodosOut();
+        assertEquals(personaDTOList.size(),1);
     }
 
     private ResponseReniec getResponseReniec() {

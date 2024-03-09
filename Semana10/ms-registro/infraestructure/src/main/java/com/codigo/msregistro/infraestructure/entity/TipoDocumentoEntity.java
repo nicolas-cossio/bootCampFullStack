@@ -10,7 +10,8 @@ import java.sql.Timestamp;
 @Table(name = "tipo_documento")
 @Getter
 @Setter
-
+@NoArgsConstructor
+@AllArgsConstructor
 public class TipoDocumentoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
