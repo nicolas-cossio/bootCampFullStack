@@ -20,8 +20,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     public ResponseEntity<Usuario> crearUsuario(Usuario usuario) {
         if (!usuarioRepository.existsByNumDocumento(usuario.getNumDocumento())) {
             usuarioRepository.save(usuario);
-            Optional<Usuario> recuperarUsuario =
-                    usuarioRepository.findByNumDocumento(usuario.getNumDocumento());
+            Optional<Usuario> recuperarUsuario = usuarioRepository.findByNumDocumento(usuario.getNumDocumento());
             return new ResponseEntity<>(recuperarUsuario.get(), HttpStatus.CREATED);
         }
         return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

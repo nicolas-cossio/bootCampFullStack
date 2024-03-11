@@ -35,7 +35,7 @@ class PersonaAdapterOtherTest {
     @Mock
     private ClienteReniec reniec;
 
-    @InjectMocks
+    @InjectMocks 
     private PersonaAdapterOther personaAdapterOther;
 
     @BeforeEach

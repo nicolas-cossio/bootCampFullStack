@@ -18,7 +18,7 @@
 		<sonar.projectKey>practica-sonar</sonar.projectKey>
 		<sonar.projectName>practica-sonar</sonar.projectName>
 		<sonar.host.url>http://localhost:9000</sonar.host.url>
-		<sonar.token>sqp_e7ff40dcb55596b813ccc966b98c06b61242e4dc</sonar.token>
+		<sonar.token>sqp_a08e967e2062865168074ed14aea123e4ba686b3</sonar.token>
 	</properties>
 	<dependencies>
 		<dependency>
