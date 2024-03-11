@@ -45,12 +45,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     //METODO DE LOGIN
     @Override
-    public AuthenticationResponse signin(SignInRequest signInRequest) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                signInRequest.getEmail(),signInRequest.getPassword()));
+    public AuthenticationResponse signIn(SignInRequest signInRequest) {
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(signInRequest.getEmail(),
+                signInRequest.getPassword())
+        );
         var user = usuarioRepository.findByEmail(signInRequest.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("Email no valido"));
-
         var jwt = jwtService.generateToken(user);
         AuthenticationResponse authenticationResponse =  new AuthenticationResponse();
         authenticationResponse.setToken(jwt);

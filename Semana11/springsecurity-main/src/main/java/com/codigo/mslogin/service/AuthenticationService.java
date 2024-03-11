@@ -8,5 +8,5 @@ import com.codigo.mslogin.response.AuthenticationResponse;
 public interface AuthenticationService {
     Usuario signUpUser(SignUpRequest signUpRequest);
     Usuario signUpAdmin(SignUpRequest signUpRequest);
-    AuthenticationResponse signin(SignInRequest signInRequest);
+    AuthenticationResponse signIn(SignInRequest signInRequest);
 }
