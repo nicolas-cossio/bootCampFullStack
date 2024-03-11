@@ -25,7 +25,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 signInRequest.getPassword())
         );
         var user = usuarioRepository.findByUsername(signInRequest.getUsername())
-                .orElseThrow(() -> new IllegalArgumentException("Email no valido"));
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no valido"));
         var jwt = jwtService.generateToken(user);
         AuthenticationResponse authenticationResponse =  new AuthenticationResponse();
         authenticationResponse.setToken(jwt);

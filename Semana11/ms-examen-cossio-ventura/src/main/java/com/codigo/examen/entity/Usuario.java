@@ -2,6 +2,7 @@ package com.codigo.examen.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 @Table(name = "usuario")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Usuario implements UserDetails {
 
     @Id
@@ -49,6 +51,11 @@ public class Usuario implements UserDetails {
             joinColumns = @JoinColumn(name = "id_usuario"),
             inverseJoinColumns = @JoinColumn(name = "id_rol"))
     private Set<Rol> roles = new HashSet<>();
+
+    public Usuario(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 
     public Set<String> getRolesNames() {
         return roles.stream().map(Rol::getNombreRol).collect(Collectors.toSet());
