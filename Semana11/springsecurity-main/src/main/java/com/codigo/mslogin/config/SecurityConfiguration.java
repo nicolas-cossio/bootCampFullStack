@@ -26,6 +26,7 @@ public class SecurityConfiguration {
     private final UsuarioService usuarioService;
 
     // Se deshabilita el csrf para evitar erores, autorizamos que apis se van a permitir y cuales requieren rol.
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request.requestMatchers("/api/v1/authentication/**")
