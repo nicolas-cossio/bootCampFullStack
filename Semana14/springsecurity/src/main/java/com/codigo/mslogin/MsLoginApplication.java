@@ -8,6 +8,7 @@ public class MsLoginApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MsLoginApplication.class, args);
+
 	}
 
 }
