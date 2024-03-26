@@ -21,11 +21,8 @@ jobs:
         with:
           java-version: '17'
 
-      - name: Pom file
-        run: mvn -f Semana14/springsecurity/pom.xml
-      
       - name: Build with Maven
-        run: mvn clean install
+        run: mvn -f Semana14/springsecurity/pom.xml clean install
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
