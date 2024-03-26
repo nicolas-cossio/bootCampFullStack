@@ -21,9 +21,8 @@ jobs:
         with:
           java-version: '17'
 
-      - name: Maven@3
-	inputs:
-		mavenPomFile: Semana14/springsecurity/pom.xml
+      - name: Redirect pom
+	run: mvn -f Semana14/springsecurity/pom.xml
       
       - name: Build with Maven
         run: mvn clean install
