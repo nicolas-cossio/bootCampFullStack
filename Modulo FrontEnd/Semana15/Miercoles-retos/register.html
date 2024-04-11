@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+    />
+    <style>
+        .names{
+            display: flex;
+            justify-content: space-between;
+        }
+        .names label {
+            width: 49%;
+        }
+        .formulario {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <main class="container formulario">
+        <form>
+            <img src="https://placehold.co/80.png?text={Logo}"/>
+            <header>
+                <h2>Crea una cuenta</h2>
+                <small>Ingresa la siguiente información para registrarte</small>
+            </header>
+            <body>
+                <div class="names">
+                    <label>
+                        Names
+                        <input type="text" placeholder="Victor" required>
+                    </label>
+                    <label>
+                        Apellidos
+                        <input type="text" placeholder="Villazón" required>
+                    </label>
+                </div>
+                <label>
+                    Edad
+                    <input type="number" placeholder="Ej: 19" required>
+                </label>
+                <label>
+                    Fecha de nacimiento
+                    <input type="date" required>
+                </label>
+                <label>
+                    Genero
+                    <select name="genero">
+                        <option value="">Selecciona tu genero</option>
+                        <option value="m">Masculino</option>
+                        <option value="f">Femenino</option>
+                    </select>
+                </label>
+                <label>
+                    Email
+                    <input type="text" placeholder="Ej: user@gmail.com" required>
+                </label>
+                <label>
+                    Dirección
+                    <input type="text" placeholder="Dirección" required>
+                    <input type="text" placeholder="Dirección 2">
+                </label>
+                <label>
+                    Teléfono
+                    <input type="text" placeholder="Número de teléfono" required>
+                </label>
+                <label>
+                    Código postal
+                    <input type="text" placeholder="Ej: 15001" required>
+                </label>
+                <label>
+                    Cuidad
+                    <input type="text" placeholder="Ej: Chicago" required>
+                </label>
+                <label>
+                    Subir firma
+                    <input type="file" accept=".jpg, .jpeg" />
+                </label>
+                <label>
+                    <input type="checkbox" required />
+                    Acepto los términos y condiciones.
+                </label>
+                <input type="submit" value="Registrame">
+                <label>
+                    Ya tienes una cuenta? <a href="./login.html" target="_blank">Accede aquí</a>
+                </label>
+            </body>
+        </form>
+    </main>
+    
+</body>
+</html>
